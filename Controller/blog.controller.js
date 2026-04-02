@@ -27,3 +27,23 @@ exports.addBlog = async (req, res) => {
         return res.status(500).json('Internal Server Error');
     }
 }
+exports.deleteBlog = async (req, res) => {
+    try {
+        let objectId = req.params._id;
+        let response = await blogModel.findByIdAndUpdate(objectId, { isDeleted: true });
+        return res.status(200).json('blog deleted successfully')
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json('Internal Server Error');
+    }
+}
+exports.updateBlog = async (req, res) => {
+    try {
+        let objectId = req.params._id;
+        let response = await blogModel.findByIdAndUpdate(objectId, { ...req.body });
+        return res.status(200).json('blog deleted successfully')
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json('Internal Server Error');
+    }
+}
