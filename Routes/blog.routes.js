@@ -7,6 +7,6 @@ const uploads = require('../Middleware/blog.multer')
 routes.get('/', verifyToken, root.fetchAllBlogs)
 routes.post('/addBlog', verifyTokenAdmin, uploads.single('cover'), root.addBlog)
 routes.delete('/:_id', verifyTokenAdmin, root.deleteBlog)
-routes.put('/:_id', verifyTokenAdmin, root.updateBlog)
+routes.patch('/:_id', verifyTokenAdmin, root.updateBlog)
 
 module.exports = routes;

@@ -30,7 +30,10 @@ exports.addBlog = async (req, res) => {
 exports.deleteBlog = async (req, res) => {
     try {
         let objectId = req.params._id;
+        let exists = await blogModel.findById(objectId);
+        if (exists.isDeleted === true) return res.status(404).json('blog not found')
         let response = await blogModel.findByIdAndUpdate(objectId, { isDeleted: true });
+        console.log(response);
         return res.status(200).json('blog deleted successfully')
     } catch (err) {
         console.log(err);
@@ -40,8 +43,10 @@ exports.deleteBlog = async (req, res) => {
 exports.updateBlog = async (req, res) => {
     try {
         let objectId = req.params._id;
+        let exists = await blogModel.findById(objectId);
+        if (exists.isDeleted === true) return res.status(404).json('blog not found')
         let response = await blogModel.findByIdAndUpdate(objectId, { ...req.body });
-        return res.status(200).json('blog deleted successfully')
+        return res.status(200).json('blog updated successfully')
     } catch (err) {
         console.log(err);
         return res.status(500).json('Internal Server Error');
